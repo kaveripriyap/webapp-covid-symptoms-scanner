@@ -1,4 +1,4 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, send_from_directory
 # from app.middleware import PrefixMiddleware
 import os
 import socket
@@ -24,7 +24,8 @@ class PrefixMiddleware(object):
         s.connect(('8.8.8.8', 53))
         return s.getsockname()[0]
 
-application = Flask(__name__)
+# application = Flask(__name__)
+application = Flask(__name__, static_folder="src", template_folder='src')
 
 # set voc=False if you run on local computer
 application.wsgi_app = PrefixMiddleware(application.wsgi_app, voc=False)
@@ -32,10 +33,11 @@ application.wsgi_app = PrefixMiddleware(application.wsgi_app, voc=False)
 @application.route('/')
 @application.route('/index')
 def index():
-    return render_template('src\index.html')
+    # return render_template('src\index.html')
+    return send_from_directory("src", 'index.html')
 
 if __name__ == "__main__":
-	application.run(host="0.0.0.0", port=8080, debug=True)
+ application.run(host="0.0.0.0", port=8080, debug=True)
  
 
 # from flask import Flask
@@ -49,8 +51,3 @@ if __name__ == "__main__":
 # application.wsgi_app = PrefixMiddleware(application.wsgi_app, voc=False)
 
 # from app import routes
-
-
-
-
-
