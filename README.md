@@ -1,0 +1,2 @@
+# webapp-covid-symptoms-scanner
+ 
